@@ -10,7 +10,7 @@ export class UserEntityDto extends BaseEntityDto {
   password: string;
 
   @IsString()
-  name: string;
+  name?: string;
 
   static from(entity: UserEntityDto): UserEntityDto {
     const dto = new UserEntityDto();
@@ -35,7 +35,9 @@ export class UserEntityDto extends BaseEntityDto {
   }
 
   static async validate(dto: UserEntityDto) {
-    const errors = await validate(dto);
+    const errors = await validate(dto, {
+      whitelist: true,
+    });
     return errors.length ? errors : null;
   }
 }
