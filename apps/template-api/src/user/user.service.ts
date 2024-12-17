@@ -1,4 +1,5 @@
 import { UserRepository } from '@library/template-domain';
+import { BaseEntityDtoGroup } from '@library/template-domain/dtos';
 import { UserEntityDto } from '@library/template-domain/dtos/user-entity.dto';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
@@ -9,13 +10,13 @@ export class UserService {
 
   async validateNewUser(form: UserEntityDto) {
     const dto = UserEntityDto.from(form);
-    const errors = await UserEntityDto.validate(dto);
+    const errors = await UserEntityDto.validate(dto, BaseEntityDtoGroup.CREATE);
     if (errors?.length) {
       throw new HttpException(
         'Invalid user data',
         HttpStatus.BAD_REQUEST,
         {
-          description: JSON.stringify(errors),
+          cause: errors,
         }
       );
     }

@@ -1,15 +1,21 @@
 import { User } from "@prisma/client";
-import { BaseEntityDto } from "./base-entity.dto";
+import { BaseEntityDto, BaseEntityDtoGroup } from "./base-entity.dto";
 import { IsEmail, IsString, IsStrongPassword, validate } from "class-validator";
 
 export class UserEntityDto extends BaseEntityDto {
-  @IsEmail()
+  @IsEmail({}, {
+    groups: [BaseEntityDtoGroup.CREATE]
+  })
   email: string;
 
-  @IsStrongPassword()
+  @IsStrongPassword({}, {
+    groups: [BaseEntityDtoGroup.CREATE]
+  })
   password: string;
 
-  @IsString()
+  @IsString({
+    groups: [BaseEntityDtoGroup.UPDATE],
+  })
   name?: string;
 
   static from(entity: UserEntityDto): UserEntityDto {
@@ -34,9 +40,10 @@ export class UserEntityDto extends BaseEntityDto {
     return dto;
   }
 
-  static async validate(dto: UserEntityDto) {
+  static async validate(dto: UserEntityDto, group: BaseEntityDtoGroup) {
     const errors = await validate(dto, {
       whitelist: true,
+      groups: [group],
     });
     return errors.length ? errors : null;
   }
