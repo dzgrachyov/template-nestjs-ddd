@@ -4,7 +4,7 @@ export enum BaseEntityDtoGroup {
   CREATE = 'create',
   UPDATE = 'update',
   DELETE = 'delete',
-  RETRIEVE = 'retrieve'
+  GET = 'get'
 }
 
 export class BaseEntityDto {
