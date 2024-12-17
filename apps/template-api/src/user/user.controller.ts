@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpException, HttpStatus, Param, Post, Res, Response } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserEntityDto } from '@library/template-domain/dtos/user-entity.dto';
 
@@ -7,24 +7,16 @@ export class UserController {
   constructor(private readonly userService: UserService) { }
 
   @Get(':id')
-  @HttpCode(200)
+  @HttpCode(HttpStatus.OK)
   getUser(@Param('id') id: number): boolean {
     return true
   }
 
   @Post()
-  @HttpCode(201)
+  @HttpCode(HttpStatus.CREATED)
   async createUser(@Body() form: UserEntityDto): Promise<UserEntityDto | boolean> {
-    const errors = this.userService.validateNewUser(form);
-    if (errors) {
-      return false;
-    }
-
+    this.userService.validateNewUser(form);
     const user = await this.userService.createNewUser(form);
-    if (!user) {
-      return false;
-    }
-
     return UserEntityDto.fromEntity(user);
   }
 }
