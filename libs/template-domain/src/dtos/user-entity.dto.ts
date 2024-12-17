@@ -40,10 +40,10 @@ export class UserEntityDto extends BaseEntityDto {
     return dto;
   }
 
-  static async validate(dto: UserEntityDto, group: BaseEntityDtoGroup) {
+  static async validate(dto: UserEntityDto, ...groups: BaseEntityDtoGroup[]) {
     const errors = await validate(dto, {
       whitelist: true,
-      groups: [group],
+      groups,
     });
     return errors.length ? errors : null;
   }
