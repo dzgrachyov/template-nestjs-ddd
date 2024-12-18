@@ -1,4 +1,6 @@
 import { Controller } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('identity')
-export class IdentityController {}
+@ApiTags('identity')
+export class IdentityController { }

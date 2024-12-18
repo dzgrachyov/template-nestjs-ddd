@@ -21,6 +21,20 @@ export class UserService {
     }
   }
 
+  async validateUpdateUser(form: UserEntityDto) {
+    const dto = UserEntityDto.from(form);
+    const errors = await UserEntityDto.validate(dto, BaseEntityDtoGroup.UPDATE);
+    if (errors?.length) {
+      throw new HttpException(
+        'Invalid user data',
+        HttpStatus.BAD_REQUEST,
+        {
+          cause: errors,
+        }
+      );
+    }
+  }
+
   async createNewUser(dto: UserEntityDto): Promise<User | null> {
     const existed = await this.userRepo.userByEmail({ email: dto.email, });
     if (existed) {
@@ -47,6 +61,39 @@ export class UserService {
     catch (error) {
       throw new HttpException(
         'Unable to create user',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  async updateUser(user: Pick<User, 'id'>, dto: UserEntityDto): Promise<User | null> {
+    const existed = await this.userRepo.userByEmail({ email: dto.email, });
+    if (existed) {
+      throw new HttpException(
+        'User with email exists',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    try {
+      if (!existed) {
+        const entity = await this.userRepo.updateUser(existed, {
+          email: dto.email,
+          password: dto.password,
+          name: dto.name,
+        });
+        if (!entity) {
+          throw new HttpException(
+            'User not created',
+            HttpStatus.BAD_REQUEST,
+          );
+        }
+        return entity;
+      }
+    }
+    catch (error) {
+      throw new HttpException(
+        'Unable to update user',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
