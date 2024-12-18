@@ -23,6 +23,12 @@
       ],
       "@library/template-domain/*": [
         "libs/template-domain/src/*"
+      ],
+      "@library/http-auth": [
+        "libs/http-auth/src"
+      ],
+      "@library/http-auth/*": [
+        "libs/http-auth/src/*"
       ]
     }
   }

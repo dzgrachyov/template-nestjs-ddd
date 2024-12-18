@@ -27,6 +27,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/template-domain/tsconfig.lib.json"
       }
+    },
+    "http-auth": {
+      "type": "library",
+      "root": "libs/http-auth",
+      "entryFile": "index",
+      "sourceRoot": "libs/http-auth/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/http-auth/tsconfig.lib.json"
+      }
     }
   }
 }

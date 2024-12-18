@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
 import { HttpAuthService } from './http-auth.service';
-import { HttpAuthGuard } from './http-auth.guard';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -11,7 +10,7 @@ import { HttpAuthGuard } from './http-auth.guard';
       signOptions: { expiresIn: '60s' },
     }),
   ],
-  providers: [HttpAuthService, HttpAuthGuard],
-  exports: [HttpAuthService, HttpAuthGuard],
+  providers: [HttpAuthService],
+  exports: [HttpAuthService],
 })
 export class HttpAuthModule { }
