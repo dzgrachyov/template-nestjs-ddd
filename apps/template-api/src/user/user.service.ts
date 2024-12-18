@@ -74,7 +74,7 @@ export class UserService {
       );
     }
 
-    const existed_id = await this.userRepo.user({ id: dto.id, });
+    const existed_id = await this.userRepo.user({ id: user.id, });
     if (!existed_id) {
       throw new HttpException(
         'User doe not exists',
