@@ -35,7 +35,7 @@ export class UserController {
     return UserEntityDto.fromEntity(user);
   }
 
-  @Put()
+  @Put(':id')
   @AuthRoles([AuthRole.Admin])
   @UseGuards(HttpAuthGuard)
   @HttpCode(HttpStatus.OK)
@@ -50,7 +50,7 @@ export class UserController {
     return UserEntityDto.fromEntity(user);
   }
 
-  @Delete()
+  @Delete(':id')
   @AuthRoles([AuthRole.Admin])
   @UseGuards(HttpAuthGuard)
   @HttpCode(HttpStatus.OK)
