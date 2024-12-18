@@ -34,7 +34,7 @@ export class UserService {
     );
   }
 
-  async createNewUser(dto: UserEntityDto): Promise<User | null> {
+  async createNewUser(dto: UserEntityDto): Promise<User> {
     const existed = await this.userRepo.userByEmail({ email: dto.email, });
     if (existed) {
       throw new HttpException(
@@ -65,30 +65,36 @@ export class UserService {
     }
   }
 
-  async updateUser(user: Pick<User, 'id'>, dto: UserEntityDto): Promise<User | null> {
-    const existed = await this.userRepo.userByEmail({ email: dto.email, });
-    if (existed) {
+  async updateUser(user: Pick<User, 'id'>, dto: UserEntityDto): Promise<User> {
+    const existed_email = await this.userRepo.userByEmail({ email: dto.email, });
+    if (existed_email) {
       throw new HttpException(
         'User with email exists',
         HttpStatus.BAD_REQUEST,
       );
     }
 
+    const existed_id = await this.userRepo.user({ id: dto.id, });
+    if (!existed_id) {
+      throw new HttpException(
+        'User doe not exists',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     try {
-      if (!existed) {
-        const entity = await this.userRepo.updateUser(existed, {
-          email: dto.email,
-          password: dto.password,
-          name: dto.name,
-        });
-        if (!entity) {
-          throw new HttpException(
-            'User not created',
-            HttpStatus.BAD_REQUEST,
-          );
-        }
-        return entity;
+      const entity = await this.userRepo.updateUser(existed_id, {
+        email: dto.email,
+        password: dto.password,
+        name: dto.name,
+      });
+      if (!entity) {
+        throw new HttpException(
+          'User not created',
+          HttpStatus.BAD_REQUEST,
+        );
       }
+      return entity;
     }
     catch (error) {
       throw new HttpException(
@@ -96,5 +102,17 @@ export class UserService {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+
+  async deleteUser(user: Pick<User, 'id'>): Promise<User> {
+    const existed = await this.userRepo.user({ id: user.id, });
+    if (!existed) {
+      throw new HttpException(
+        'User doe not exists',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    return this.userRepo.deleteUser(existed);
   }
 }
