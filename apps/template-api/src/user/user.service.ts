@@ -1,6 +1,5 @@
 import { UserRepository } from '@library/template-domain';
-import { BaseEntityDtoGroup } from '@library/template-domain/dtos';
-import { UserEntityDto } from '@library/template-domain/dtos/user-entity.dto';
+import { BaseEntityDtoGroup, UserEntityDto } from '@library/template-domain';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
 

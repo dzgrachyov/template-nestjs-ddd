@@ -1,4 +1,3 @@
 export * from './repos';
-
-export * from './template-domain.module';
-export * from './template-domain.service';
+export * from './dtos';
+export * from './http-auth';

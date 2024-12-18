@@ -1,19 +1,23 @@
-import { Body, Controller, Get, HttpCode, HttpException, HttpStatus, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { UserService } from './user.service';
-import { UserEntityDto } from '@library/template-domain/dtos/user-entity.dto';
+import { UserEntityDto, AuthRole, AuthRoles, HttpAuthGuard } from '@library/template-domain';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) { }
 
   @Get(':id')
+  @AuthRoles([AuthRole.Admin])
+  @UseGuards(HttpAuthGuard)
   @HttpCode(HttpStatus.OK)
   getUser(@Param('id') id: string): boolean {
     return true
   }
 
   @Post()
+  @AuthRoles([AuthRole.Admin])
+  @UseGuards(HttpAuthGuard)
   @HttpCode(HttpStatus.CREATED)
   async createUser(@Body() form: UserEntityDto, @Res() response: Response): Promise<UserEntityDto | boolean> {
     try {
