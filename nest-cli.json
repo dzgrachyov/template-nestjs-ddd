@@ -45,6 +45,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/template-common/tsconfig.lib.json"
       }
+    },
+    "template-calculation": {
+      "type": "application",
+      "root": "apps/template-calculation",
+      "entryFile": "main",
+      "sourceRoot": "apps/template-calculation/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/template-calculation/tsconfig.app.json"
+      }
     }
   }
 }

@@ -4,6 +4,7 @@ import { TemplateApiService } from './template-api.service';
 import { IdentityModule } from './identity/identity.module';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
+import { BalanceModule } from './balance/balance.module';
 import http_api_config from 'config/http-api.config';
 
 @Module({
@@ -14,6 +15,7 @@ import http_api_config from 'config/http-api.config';
     }),
     IdentityModule,
     UserModule,
+    BalanceModule,
   ],
   controllers: [TemplateApiController],
   providers: [TemplateApiService],
