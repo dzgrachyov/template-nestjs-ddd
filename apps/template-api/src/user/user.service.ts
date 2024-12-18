@@ -10,29 +10,28 @@ export class UserService {
   async validateNewUser(form: UserEntityDto) {
     const dto = UserEntityDto.from(form);
     const errors = await UserEntityDto.validate(dto, BaseEntityDtoGroup.CREATE);
-    if (errors?.length) {
-      throw new HttpException(
-        'Invalid user data',
-        HttpStatus.BAD_REQUEST,
-        {
-          cause: errors,
-        }
-      );
-    }
+    if (!errors?.length) return;
+    throw new HttpException(
+      'Invalid user data',
+      HttpStatus.BAD_REQUEST,
+      {
+        cause: errors,
+      }
+    );
+
   }
 
   async validateUpdateUser(form: UserEntityDto) {
     const dto = UserEntityDto.from(form);
     const errors = await UserEntityDto.validate(dto, BaseEntityDtoGroup.UPDATE);
-    if (errors?.length) {
-      throw new HttpException(
-        'Invalid user data',
-        HttpStatus.BAD_REQUEST,
-        {
-          cause: errors,
-        }
-      );
-    }
+    if (!errors?.length) return;
+    throw new HttpException(
+      'Invalid user data',
+      HttpStatus.BAD_REQUEST,
+      {
+        cause: errors,
+      }
+    );
   }
 
   async createNewUser(dto: UserEntityDto): Promise<User | null> {
