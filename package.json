@@ -78,7 +78,8 @@
     ],
     "moduleNameMapper": {
       "^@library/template-domain(|/.*)$": "<rootDir>/libs/template-domain/src/$1",
-      "^@library/http-auth(|/.*)$": "<rootDir>/libs/http-auth/src/$1"
+      "^@library/http-auth(|/.*)$": "<rootDir>/libs/http-auth/src/$1",
+      "^@library/template-common(|/.*)$": "<rootDir>/libs/template-common/src/$1"
     }
   }
 }

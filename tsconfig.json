@@ -29,6 +29,12 @@
       ],
       "@library/http-auth/*": [
         "libs/http-auth/src/*"
+      ],
+      "@library/template-common": [
+        "libs/template-common/src"
+      ],
+      "@library/template-common/*": [
+        "libs/template-common/src/*"
       ]
     }
   }

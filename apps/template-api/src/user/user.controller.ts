@@ -1,9 +1,10 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Res, UseGuards, UseInterceptors } from '@nestjs/common';
 import { Response } from 'express';
 import { UserService } from './user.service';
-import { UserEntityDto, ErrorInterceptor } from '@library/template-domain';
+import { UserEntityDto } from '@library/template-domain';
 import { AuthRole, AuthRoles, HttpAuthGuard } from '@library/http-auth';
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ErrorInterceptor } from '@library/template-common';
 
 @Controller('user')
 @UseInterceptors(ErrorInterceptor)
