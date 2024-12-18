@@ -3,8 +3,8 @@ import { Response } from 'express';
 import { UserService } from './user.service';
 import { UserEntityDto, AuthRole, AuthRoles, HttpAuthGuard, ErrorInterceptor } from '@library/template-domain';
 
-@UseInterceptors(ErrorInterceptor)
 @Controller('user')
+@UseInterceptors(ErrorInterceptor)
 export class UserController {
   constructor(private readonly userService: UserService) { }
 
