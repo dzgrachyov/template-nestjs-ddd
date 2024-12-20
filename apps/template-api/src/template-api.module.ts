@@ -11,7 +11,6 @@ import http_api_config from 'config/http-api.config';
   imports: [
     ConfigModule.forRoot({
       load: [http_api_config],
-      envFilePath: './apps/template-api/.env',
     }),
     IdentityModule,
     UserModule,
