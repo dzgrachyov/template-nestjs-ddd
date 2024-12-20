@@ -1,3 +1,3 @@
 export default () => ({
-  port: parseInt(process.env.PORT, 10) || 3001,
+  port: parseInt(process.env.PORT_BALANCE_SERVICE, 10) || 3001,
 });
